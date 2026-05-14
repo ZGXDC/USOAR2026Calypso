@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Model checkpoints & weights
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.pkl
+*.safetensors
+
+# Datasets & medical imaging data
+data/
+*.dcm
+*.dicom
+*.nii
+*.nii.gz
+*.csv
+
+# Logs & experiment tracking
+logs/
+runs/
+wandb/
+mlruns/
+*.log
+tensorboard/
+
+# Output images & visualizations
+outputs/
+results/
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.tmp
+*.bak
+.cache/
