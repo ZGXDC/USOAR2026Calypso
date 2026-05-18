@@ -22,6 +22,7 @@ from torch.utils.data import DataLoader
 from unet import UNet
 from datasets import CBISDDSMSegDataset
 
+import wandb
 
 # ---------------------------------------------------------------------------
 # Loss
@@ -154,6 +155,7 @@ def main():
         num_workers=args.workers,
         pin_memory=device.type == "cuda",
     )
+    
     val_loader = DataLoader(
         val_ds,
         batch_size=args.batch_size,
@@ -179,6 +181,19 @@ def main():
     # ------------------------------------------------------------------
     # Training loop
     # ------------------------------------------------------------------
+    
+    #INITIALIZE WANDB
+    run = wandb.init(
+    # Set the wandb entity where your project will be logged (generally your team name).
+    entity="zgxdc-indiana-university-of-pennsylvania",
+    # Set the wandb project where this run will be logged.
+    project="USOAR_2026",
+    # Track hyperparameters and run metadata.
+    config={
+        "architecture": "UNet",
+        "dataset": "CBIS-DDSM Segmentation",
+        "epochs": f"{args.epochs}"
+    })
     best_val_dice = 0.0
     epochs_no_improve = 0
 
@@ -223,10 +238,13 @@ def main():
             if epochs_no_improve >= args.patience:
                 print(f"Early stopping: no improvement for {args.patience} epochs.")
                 break
-
+            
+        run.log({"epoch": epoch, "trainLoss": train_loss, "trainDice": train_dice, "trainIou": train_iou,
+                 "valLoss": val_loss, "valDice": val_dice, "valIou": val_iou, "bestValDice": best_val_dice})
+    
     print(f"\nTraining complete. Best val dice: {best_val_dice:.4f}")
     print(f"Checkpoints saved to: {out_dir.resolve()}")
-
+    run.finish()
 
 if __name__ == "__main__":
     main()
