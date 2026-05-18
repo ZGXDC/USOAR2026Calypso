@@ -133,8 +133,14 @@ def visualize_row(row: pd.Series, data_root: Path):
     axes[2].axis("off")
 
     plt.tight_layout()
-    plt.show()
-
+    # plt.show()
+    #SAVING FIGURES TO "SavedFigures" DIRECTORY TO MAKE IMAGES ACCESSIBLE
+    savedPath = title.replace(" ", "_")
+    savedPath = savedPath.replace("|", "")
+    savedPath = savedPath.replace("/", "_")
+    savedPath = f"SavedFigures/{savedPath}.png"
+    plt.savefig(savedPath, bbox_inches="tight")
+    plt.close(fig)
 
 def main():
     p = argparse.ArgumentParser()
